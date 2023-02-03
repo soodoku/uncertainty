@@ -22,6 +22,12 @@ fin_dat$num6c <- fin_dat$num6 == "100"
 fin_dat$numeracy <- with(fin_dat, rowMeans(cbind(num1c, num2c, num3c, num4c, num5c, num6c)))
 
 # Uncertainty qs. --- proportion choosing cash
+# cond
+fin_dat %>%
+  group_by(cond) %>%
+  summarise(orig_sure = mean(original_sure == "$25 in cash"), 
+            orig_uncertain = mean(original_uncertain == "$25 in cash"),
+            uncertain_clarified = mean(uncertain_clarified == "$25 in cash", na.rm = T))
 mean(fin_dat$original_sure == "$25 in cash", na.rm = T)
 mean(fin_dat$original_uncertain == "$25 in cash", na.rm = T)
 mean(fin_dat$uncertain_clarified == "$25 in cash", na.rm = T)
@@ -31,12 +37,13 @@ mean(as.numeric(fin_dat$followup))
 mean(fin_dat$direct_comp == "A $50 Amazon gift card", na.rm = T)
 
 # PID 
-fin_dat$dem <- fin_dat$political_party %in% c("1", "2", "3", "4")
-fin_dat$rep <- fin_dat$political_party %in% c("7", "8", "9", "10")
+fin_dat$dem <- fin_dat$political_party %in% c("1", "2", "3", "6")
+fin_dat$rep <- fin_dat$political_party %in% c("5", "8", "9", "10")
+fin_dat$dem[fin_dat$rep == FALSE & fin_dat$dem == FALSE] <- NA
 
 # Unemployment interpretation
 fin_dat %>% 
-  group_by(econ_cond) %>% 
+  group_by(econ_cond, dem) %>% 
   summarise(a = mean(unemp_reps == "Got Better", na.rm = T),
             b = mean(unemploy_dems == "Got Better", na.rm = T), 
             c = mean(inflation_reps == "Got Better", na.rm = T),
