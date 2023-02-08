@@ -46,11 +46,11 @@ fin_dat %>%
 
 fin_dat %>%
   group_by(cond) %>%
-  summarise(mean_est = mean(followup_n), med_est = median(followup_n))
+  summarise(mean_est = mean(followup_n, na.rm = T), med_est = median(followup_n, na.rm = T))
 
 fin_dat %>%
   group_by(cond, sure_choice) %>%
-  summarise(mean_est = mean(followup_n), med_est = median(followup_n))
+  summarise(mean_est = mean(followup_n, na.rm = T), med_est = median(followup_n, na.rm = T))
 
 #### Let's look at numeracy
 fin_dat %>%
@@ -60,7 +60,7 @@ fin_dat %>%
 fin_dat %>%
   filter(numeracy > .7) %>%
   group_by(cond, sure_choice) %>%
-  summarise(mean_est = mean(followup_n), med_est = median(followup_n))
+  summarise(mean_est = mean(followup_n, na.rm = T), med_est = median(followup_n, na.rm = T))
 
 fin_dat %>%
   group_by(cond, numeracy > .7) %>%
