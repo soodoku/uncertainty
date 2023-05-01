@@ -6,7 +6,7 @@ library(ggplot2)
 library(knitr)
 
 # Load dat
-uncert <- read_csv("data/prolific/Bot research_April 30, 2023_11.19.csv")
+uncert <- read_csv("data/prolific/Bot research_April 30, 2023_18.01.csv")
  
 # Filter attn_check
 uncert$attn_checkc <- uncert$attn == "Extremely interested,Very interested"
@@ -18,9 +18,9 @@ fin_dat <- uncert[uncert$consent == 'Yes' & uncert$DistributionChannel != "previ
 ## -----------
 
 # Numeracy
-fin_dat$num1c <- fin_dat$num1 == "$29.50"
+fin_dat$num1c <- fin_dat$num1 == "45 miles"
 fin_dat$num2c <- fin_dat$num2 == "500"
-fin_dat$num3c <- fin_dat$num3 == "100"
+fin_dat$num3c <- fin_dat$num3 == "44"
 fin_dat$num4c <- fin_dat$num4 == "$150"
 fin_dat$num5c <- fin_dat$num5 == "$9,000"
 fin_dat$num6c <- fin_dat$num6 == "10"
