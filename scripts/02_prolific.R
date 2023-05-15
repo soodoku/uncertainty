@@ -26,6 +26,21 @@ all_dat <- uncert %>%
 fin_dat <- all_dat %>% 
   filter(consent == 'Yes' & DistributionChannel != "preview" & !is.na(prolific_id) & attn_checkc)
 
+# Bonus via prolific
+bon <- fin_dat %>% filter(!is.na(bonus_amt)) %>% select(prolific_id, bonus_amt)
+bon$bonus_amt <- ifelse(grepl("\\.", bon$bonus_amt), paste0("0", bon$bonus_amt), bon$bonus_amt)
+write_csv(bon, file = "data/prolific/bonus_uncertain_cash.csv") # sum(as.numeric(bon$bonus_amt)) ($197)
+fin_dat$yes_to_cash_3_TEXT[!is.na(fin_dat$yes_to_cash_3_TEXT)] #email only gift cards
+a <- fin_dat$prolific_id[!is.na(fin_dat$bonus_certain) & fin_dat$bonus_certain == "$0.25 in cash"]
+b <- fin_dat$prolific_id[!is.na(fin_dat$bonus_uncertain) & fin_dat$bonus_uncertain == "$0.25 in cash"]
+c <- fin_dat$prolific_id[!is.na(fin_dat$bonus_with_pre_ev) & fin_dat$bonus_with_pre_ev == "$0.25 in cash"]
+d <- unique(c(a, b, c))
+e <- d[!(d %in% c("63f77d4f671167ec16eee15c", "62c66885ba0578c9b5a0e4ae", "5e3244f5bac19521aee1a0de", "610da052e73bf3db58b1402f",
+         "60c2dde65a63ca7ad434f658", "5c17a9fbfeaf2c0001c4b19a", "5feca808ebe59297998b5133", "63ed86ca95e89a58884b9677", 
+         "5ea7b7db3021ac19f4c60770", "5e6033dbfb4665381e27f2fc", "57d810f1813eb30001825b65", "61086791465482e3ec238c87", 
+         "63d698429453269de520bbb8", "615defb34adf2f2e2e4bc539"))]
+f <- data.frame(prolific_id = e, bonus = "0.25")
+write_csv(f, file = "data/prolific/bonus_certain.csv")
 
 ## Recoding
 ## -----------
@@ -106,3 +121,7 @@ fin_dat %>%
   group_by(bonus, numeracy > .7) %>%
   summarise(mean(sure_choice_bonus, na.rm = T))
 
+## Regressions
+summary(lm(sure_choice ~ uncertainty_exp + bonus + numeracy, data = fin_dat))
+summary(lm(sure_choice ~ uncertainty_exp*numeracy, data = fin_dat))
+summary(lm(sure_choice_bonus ~ bonus + numeracy, data = fin_dat))
