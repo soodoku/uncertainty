@@ -24,7 +24,7 @@ all_dat <- uncert %>%
 
 # Filter those who consent and not preview
 fin_dat <- all_dat %>% 
-  filter(consent == 'Yes' & DistributionChannel != "preview" & !is.na(prolific_id) & attn_checkc)
+  filter(consent == 'Yes' & DistributionChannel != "preview" & !is.na(prolific_id) & attn_checkc & bonus != '.50' & bonus != '1')
 
 # Bonus via prolific
 bon <- fin_dat %>% filter(!is.na(bonus_amt)) %>% select(prolific_id, bonus_amt)
@@ -125,3 +125,50 @@ fin_dat %>%
 summary(lm(sure_choice ~ uncertainty_exp + bonus + numeracy, data = fin_dat))
 summary(lm(sure_choice ~ uncertainty_exp*numeracy, data = fin_dat))
 summary(lm(sure_choice_bonus ~ bonus + numeracy, data = fin_dat))
+
+### Long form
+exp_1 <- fin_dat %>%
+  select(sure_choice, uncertainty_exp, ResponseId, numeracy)
+
+exp_2 <- fin_dat %>%
+  select(sure_choice_bonus, bonus, ResponseId, numeracy) %>%
+  rename(sure_choice = sure_choice_bonus, uncertainty_exp = bonus)
+
+ldat <- bind_rows(exp_1, exp_2)
+# 1. certain_choice_or_not ~ condition_ids [6 dummies] + clustered_se_by_respondent
+library(lme4)
+summary(lmer(sure_choice ~ uncertainty_exp + numeracy + (1|ResponseId), data = ldat))
+
+# Recode to 5 dummies, combining certain and a variable for bonus
+
+ldat <- ldat %>%
+  mutate(bonus_or_not = case_when(
+    uncertainty_exp == 'certain_choice' ~ 0,
+    uncertainty_exp == 'gigerenzer_choice' ~ 0,
+    uncertainty_exp == 'ariely_choice' ~ 0,
+    uncertainty_exp == 'uncertain_choice' ~ 0,
+    uncertainty_exp == 'certain' ~ 1,
+    uncertainty_exp == 'pre' ~ 1,
+    uncertainty_exp == 'uncertain' ~ 1
+))
+
+ldat <- ldat %>%
+  mutate(treat_five = case_when(
+    uncertainty_exp == 'certain_choice' ~ 'certain',
+    uncertainty_exp == 'gigerenzer_choice' ~ 'gigerenzer_choice',
+    uncertainty_exp == 'ariely_choice' ~ 'ariely_choice',
+    uncertainty_exp == 'uncertain_choice' ~ 'uncertain',
+    uncertainty_exp == 'certain' ~ 'certain',
+    uncertainty_exp == 'pre' ~ 'pre',
+    uncertainty_exp == 'uncertain' ~ 'uncertain'
+  )) %>%
+  mutate(treat_five = fct_relevel(treat_five, "certain"))
+
+
+summary(lmer(sure_choice ~ treat_five*bonus_or_not*numeracy + (1|ResponseId), data = ldat))
+
+# Let's do transitions 
+small_dat <- fin_dat %>%
+  filter(uncertainty_exp == 'uncertain_choice' | bonus == 'uncertain')
+table(small_dat$sure_choice, small_dat$sure_choice_bonus)
+
