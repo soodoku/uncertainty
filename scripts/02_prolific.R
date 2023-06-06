@@ -83,13 +83,16 @@ ggplot(num_mean_se,
         axis.title.x = element_text(vjust = -1, margin = margin(10, 0, 0, 0)),
         axis.title.y = element_text(vjust = 1),
         axis.ticks   = element_line(color = "#e3e3e3", linewidth = .2),
-        plot.margin = unit(c(0, 1, .5, 0), "cm")) + 
-  coord_flip()
+        plot.margin = unit(c(.2, .5, 1, .2), "cm")) + 
+coord_flip()
 ggsave("figs/prolific_numeracy.png")
 ggsave("figs/prolific_numeracy.pdf")
 
 # Uncertainty qs. --- proportion choosing cash
 
+### Analysis
+
+fin_dat <- fin_dat %>% filter(!is.na(uncertainty_exp))
 fin_dat <- fin_dat %>% 
   mutate(sure_choice = case_when(
     uncertainty_exp == "ariely_choice" ~ ariely_choice == "$25 in cash",
@@ -98,10 +101,48 @@ fin_dat <- fin_dat %>%
     uncertainty_exp == "uncertain_choice" ~ uncertain_choice == "$25 in cash"
   ))
 
+fin_dat <- fin_dat %>% 
+  mutate(uncertainty_exp = recode(uncertainty_exp,
+                       "ariely_choice" = "Decoy",
+                       "gigerenzer_choice" = "Natural Frequency",
+                       "certain_choice" = "Certain choice",
+                       "uncertain_choice" = "Uncertain choice"))
+
 ### Analysis
-fin_dat %>%
+prolific_exp1 <- fin_dat %>%
+  filter(!is.na(uncertainty_exp)) %>%
   group_by(uncertainty_exp) %>%
-  summarise(mean(sure_choice))
+  summarise(mean = mean(sure_choice, na.rm = T), 
+            se = sd(sure_choice)/sqrt(n()),
+            lower = mean - qt(0.975, df = length(sure_choice)-1) * se,
+            upper = mean + qt(0.975, df = length(sure_choice)-1) * se)
+
+latex_prolific_exp1 <- xtable(prolific_exp1, caption = "Means and SEs from Experiment 1", label = "table:prolific_means")
+print(latex_prolific_exp1, include.rownames = FALSE, caption.placement = "top", file = "tabs/prolific_exp1.tex")
+
+# Create the ggplot
+ggplot(prolific_exp1, aes(x = mean, y = uncertainty_exp, xmin = lower, xmax = upper)) +
+  geom_point(size = 2, color = "#aaccff") +
+  geom_errorbar(width = 0, colour="#0099ff", alpha = .5) +
+  labs(x = "Proportion Choosing $25 in Cash", y = "") +
+  #geom_text(aes(label = cond), hjust = 0.5, vjust = -0.75, color = "black", size = 3) + 
+  geom_text(aes(label = paste(gsub("^0+", "",round(mean, 2)), "\n(",gsub("^0+", "",round(se, 2)),")")),
+            hjust = -0.1, vjust = 1.5, color = "black", size = 3) +
+  theme_bw() + 
+  theme(panel.grid.major = element_line(color="#e1e1e1",  linetype = "dotted"),
+        panel.grid.minor = element_blank(),
+        legend.position  ="bottom",
+        legend.key      = element_blank(),
+        legend.key.width = unit(1, "cm"),
+        axis.title   = element_text(size = 10, color = "#555555"),
+        axis.text    = element_text(size = 10, color = "#555555"),
+        axis.ticks.y = element_blank(),
+        axis.title.x = element_text(vjust = -1, margin = margin(10, 0, 0, 0)),
+        axis.title.y = element_text(vjust = 1),
+        axis.ticks   = element_line(color = "#e3e3e3", linewidth = .2),
+        plot.margin = unit(c(.2, .5, 1, .2), "cm"))
+ggsave("figs/prolific_exp1.png")
+ggsave("figs/prolific_exp1.pdf")
 
 #### Let's look at numeracy
 fin_dat %>%
@@ -118,9 +159,45 @@ fin_dat <- fin_dat %>%
 
 ### Analysis
 
-fin_dat %>%
-  group_by(bonus, numeracy > .7) %>%
-  summarise(mean(sure_choice_bonus, na.rm = T))
+fin_dat <- fin_dat %>% 
+  mutate(bonus = recode(bonus,
+                                "pre" = "Ask",
+                                "certain" = "Certain choice",
+                                "uncertain" = "Uncertain choice"))
+
+prolific_exp2 <- fin_dat %>%
+  group_by(bonus) %>%
+  summarise(mean = mean(sure_choice_bonus, na.rm = T), 
+            se = sd(sure_choice_bonus, na.rm = T)/sqrt(n()),
+            lower = mean - qt(0.975, df = length(sure_choice_bonus)-1) * se,
+            upper = mean + qt(0.975, df = length(sure_choice_bonus)-1) * se)
+
+latex_prolific_exp2 <- xtable(prolific_exp2, caption = "Means and SEs from Experiment 1", label = "table:prolific_means")
+print(latex_prolific_exp2, include.rownames = FALSE, caption.placement = "top", file = "tabs/prolific_exp1.tex")
+
+# Create the ggplot
+ggplot(prolific_exp2, aes(x = mean, y = bonus, xmin = lower, xmax = upper)) +
+  geom_point(size = 2, color = "#aaccff") +
+  geom_errorbar(width = 0, colour="#0099ff", alpha = .5) +
+  labs(x = "Proportion Choosing $25 in Cash", y = "") +
+  #geom_text(aes(label = cond), hjust = 0.5, vjust = -0.75, color = "black", size = 3) + 
+  geom_text(aes(label = paste(gsub("^0+", "",round(mean, 2)), "\n(",gsub("^0+", "",round(se, 2)),")")),
+            hjust = -0.1, vjust = 1.5, color = "black", size = 3) +
+  theme_bw() + 
+  theme(panel.grid.major = element_line(color="#e1e1e1",  linetype = "dotted"),
+        panel.grid.minor = element_blank(),
+        legend.position  ="bottom",
+        legend.key      = element_blank(),
+        legend.key.width = unit(1, "cm"),
+        axis.title   = element_text(size = 10, color = "#555555"),
+        axis.text    = element_text(size = 10, color = "#555555"),
+        axis.ticks.y = element_blank(),
+        axis.title.x = element_text(vjust = -1, margin = margin(10, 0, 0, 0)),
+        axis.title.y = element_text(vjust = 1),
+        axis.ticks   = element_line(color = "#e3e3e3", linewidth = .2),
+        plot.margin = unit(c(.2, .5, 1, .2), "cm"))
+ggsave("figs/prolific_exp2.png")
+ggsave("figs/prolific_exp2.pdf")
 
 ## Regressions
 summary(lm(sure_choice ~ uncertainty_exp + bonus + numeracy, data = fin_dat))

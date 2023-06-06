@@ -87,7 +87,7 @@ exp1 <- fin_dat %>%
   group_by(cond) %>%
   summarise(mean(sure_choice), se = sd(sure_choice)/sqrt(n()))
 
-latex_exp1 <- xtable(exp1, caption = "Means and SEs from Experiment 1", label = "table:means")
+latex_exp1 <- xtable(exp1, caption = "Means and SEs from Experiment 1", label = "table:lucid_means")
 print(latex_exp1, include.rownames = FALSE, caption.placement = "top", file = "tabs/lucid_exp1.tex")
 
 confidence_intervals <- fin_dat  %>%
