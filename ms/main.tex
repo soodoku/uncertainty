@@ -1,0 +1,225 @@
+\documentclass[12pt, letterpaper]{article}
+\usepackage[titletoc,title]{appendix}
+\usepackage{color}
+\usepackage{booktabs}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\definecolor{dark-red}{rgb}{0.75,0.10,0.10}
+\definecolor{bluish}{rgb}{0.05,0.05,0.85}
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{naturalnames}{hyperref}
+\usepackage[margin=1in]{geometry}
+\usepackage[linkcolor=blue,
+			colorlinks=true,
+			urlcolor=blue,
+			pdfstartview={XYZ null null 1.00},
+			pdfpagemode=UseNone,
+			citecolor={bluish},
+			pdftitle={social proof}]{hyperref}
+
+%\newcites{SI}{SI References}
+\usepackage{natbib}
+
+\usepackage{float}
+\usepackage{placeins}
+
+\usepackage{geometry}  % see geometry.pdf on how to lay out the page. There's lots.
+\geometry{letterpaper} % This is 8.5x11 paper. Options are a4paper or a5paper or other...
+\usepackage{graphicx}  % Handles inclusion of major graphics formats and allows use of
+\usepackage{amsfonts,amssymb,amsbsy}
+\usepackage{amsxtra}
+\usepackage{verbatim}
+%\setcitestyle{round,semicolon,aysep={},yysep={;}}
+\usepackage{setspace} % Permits line spacing control. Options are:
+%\doublespacing
+%\onehalfspace
+%\usepackage{sectsty}    % Permits control of section header styles
+\usepackage{pdflscape}
+\usepackage{fancyhdr}   % Permits header customization. See header section below.
+\usepackage{url}        % Correctly formats URLs with the \url{} tag
+\usepackage{fullpage}   %1-inch margins
+\usepackage{multirow}
+\usepackage{verbatim}
+\usepackage{rotating}
+\setlength{\parindent}{3em}
+
+%\usepackage[T1]{fontenc}
+%\usepackage[bitstream-charter]{mathdesign}
+
+\usepackage{chngcntr}
+\usepackage{longtable}
+\usepackage{adjustbox}
+\usepackage{dcolumn}
+
+\usepackage[nameinlink, capitalize, noabbrev]{cleveref}
+
+\def\citeapos#1{\citeauthor{#1}'s (\citeyear{#1})}
+
+\makeatother
+
+\usepackage{footmisc}
+\setlength{\footnotesep}{\baselineskip}
+\makeatother
+\renewcommand{\footnotelayout}{\normalsize \doublespacing}
+
+
+% Colors
+\usepackage{color}
+
+\newcommand{\bch}{\color{blue}\em  }   % begin change
+\newcommand{\ying} {\color{orange}\em  }   % begin change
+\newcommand{\bgcd} {\color{purple}\em }
+\newcommand{\ech}{\color{black}\rm  }    % end change
+
+% Caption
+\usepackage[hang, font=small,skip=0pt, labelfont={bf}]{caption}
+%\captionsetup[subtable]{font=small,skip=0pt}
+\usepackage{subcaption}
+
+% tt font issues
+% \renewcommand*{\ttdefault}{qcr}
+\renewcommand{\ttdefault}{pcr}
+
+
+\usepackage{tocloft}
+
+
+\usepackage{lscape}
+\renewcommand{\textfraction}{0}
+\renewcommand{\topfraction}{0.95}
+\renewcommand{\bottomfraction}{0.95}
+\renewcommand{\floatpagefraction}{0.40}
+\setcounter{totalnumber}{5}
+\makeatletter
+\providecommand\phantomcaption{\caption@refstepcounter\@captype}
+\makeatother
+
+\title{Is an Uncertain Prospect Less Preferred Than Its Worst Possible Outcome? New Evidence on the Uncertainty Effect\thanks{You can download the replication materials from \href{http://github.com/soodoku/uncertainty}{http://github.com/soodoku/uncertainty}.}}
+
+%\author{Lucas Shen\thanks{Lucas is a Research Fellow at the National University of Singapore, \href{mailto:lucas@lucasshen.com}{\footnotesize{\texttt{lucas@lucasshen.com}}}} \and Gaurav Sood\thanks{Gaurav can be reached at \href{mailto:gsood07@gmail.com}{\footnotesize{\texttt{gsood07@gmail.com}}}}\vspace{.5cm}}
+
+\author{Doug Ahler\thanks{Doug can be reached at, \href{mailto:doug.ahler@gmail.com}{\footnotesize{\texttt{doug.ahler@gmail.com}}}} \and Gaurav Sood\thanks{Gaurav can be reached at \href{mailto:gsood07@gmail.com}{\footnotesize{\texttt{gsood07@gmail.com}}}}}
+
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\thispagestyle{empty}
+\begin{abstract}
+\noindent In a seminal article in the Quarterly Journal of Economics, \cite{gneezy2006uncertainty} (GLW) report the discovery of the uncertainty effect. In a series of experiments, they find that people are averse to picking the uncertain option even when the certain choice is worse than the worst possible outcome of the uncertain option. We successfully replicate the main finding with two larger, more representative surveys. But our data also suggest three qualifiers: 1. Adding clarifying text about the worst case to the uncertain option closes the gap, 2. Numeracy strongly predicts who chooses the worse option, 3. Providing bonus flips the sign of the effect.
+\end{abstract} 
+\clearpage
+\setcounter{page}{1}
+\doublespace
+
+\section*{Replication}
+\subsection*{Results}
+
+Figure 1 presents the results. In the baseline condition, just 36.5\% of participants opt for the \$25 in cash over the \$50 Amazon gift card. Rationally, then, we should expect to see a smaller percentage taking the cash in the lottery conditions, as the lottery is worth more than \$50 in Amazon money. But we observe a different pattern. First, a full 61.5\% opt for the cash over the lottery in the ``original lottery'' condition—consistent with Gneezy, List, and Wu (2006), we find that the lottery worth \$75 in Amazon money, and guaranteed to pay out at least \$50 in Amazon money, is less popular than \$50 in Amazon money for sure. 
+
+
+\section*{Numeracy}
+
+\section*{Bonus}
+
+\section*{Discussion}
+
+\clearpage
+\bibliographystyle{apsr}
+\bibliography{uncertainty}
+\clearpage
+
+%===============================================================================
+%===============================================================================
+% Appendix
+%===============================================================================
+%===============================================================================
+\appendix
+\renewcommand{\thesection}{SI \arabic{section}}
+\renewcommand\thetable{\thesection.\arabic{table}}  
+\renewcommand\thefigure{\thesection.\arabic{figure}}
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+
+\section*{Supporting Information}\label{si}
+
+\section{Survey 1 (Lucid)}
+
+\subsection{Attention Check}
+People are very busy these days and many do not have time to follow what goes on in the government. We are testing whether people read questions. To show that you've read this much, answer both ``extremely interested'' and ``very interested.'' --- Extremely interested, Very interested, Moderately interested,  Slightly interested, Not at all interested
+
+\subsection{Numeracy Battery}
+
+The order of the response options was randomized.
+
+\begin{itemize}
+    \item A man writes a check for $100 when he has only $70.50 in the bank. By how much is he overdrawn? — \$29.50, \$170.50, \$100, \$30.50
+    \item Imagine that we roll a fair, six-sided die 1000 times. Out of 1000 rolls, how many times do you think the die would come up as an even number? — 500, 600, 167, 750
+    \item If the chance of getting a disease is 10 percent, how many people out of 1,000 would be expected to get the disease? — 100, 10, 1000, 500
+    \item In a sale, a shop is selling all items at half price. Before the sale, the sofa costs \$300. How much will it cost on sale? — \$150, \$100, \$200, \$250
+    \item A second-hand car dealer is selling a car for \$6,000. This is two-thirds of what it cost new. How much did the car cost new? — \$9,000, \$4,000, \$12,000, \$8,000
+    \item In the BIG BUCKS LOTTERY, the chances of winning a \$10 prize are 1\%. What is your best guess about how many people would win a \$10 prize if 1000 people each buy a single ticket from BIG BUCKS? — 10, 1, 100, 50
+\end{itemize}
+
+\subsection{Experimental Conditions}
+
+\begin{itemize}
+    \item Which would you prefer? \$25 in cash, A \$50 Amazon gift card
+    \item Which would you prefer? \$25 in cash, A lottery in which you have a 50\% chance of winning a \$50 Amazon gift card and a 50\% chance of winning a \$100 Amazon gift card.
+    \item Which would you prefer? \$25 in cash, A lottery in which you have a 50\% chance of winning a \$50 Amazon gift card and a 50\% chance of winning a \$100 Amazon gift card. To be clear, you are guaranteed to get at least a \$50 gift card.
+    \item Which would you prefer? A \$50 Amazon gift card, A lottery in which you have a 50\% chance of winning a \$50 Amazon gift card and a 50\% chance of winning a \$100 Amazon gift card.
+    \item What is the average amount (in gift card money) you would win from the following lottery? You have a 50\% chance of winning a \$50 gift card and a 50\% chance of winning a \$100 gift card.
+\end{itemize}
+
+\section{Survey 2 (Prolific)}
+
+\subsection{Attention}
+
+\subsubsection{Incentivizing Attention}
+On the survey, we will check if people are paying attention. Those paying attention will get an additional bonus payment.
+
+\subssubection{Attention Check}
+People are very busy these days and many do not have time to follow what goes on in the government. We are testing whether people read questions. To show that you've read this much, answer both ``extremely interested'' and ``very interested.'' --- Extremely interested, Very interested,  Moderately interested, Slightly interested, Not at all interested
+
+\subsection{Numeracy Battery}
+
+The order of the response options was randomized.
+
+\begin{itemize}
+    \item In the BIG BUCKS LOTTERY, the chances of winning a \$10 prize are 1\%. What is your best guess about how many people would win a \$10 prize if 1000 people each buy a single ticket from BIG BUCKS? — 10, 1, 100, 50
+    
+    \item A train travels 1 mile in 1 minute and 20 seconds. How many miles will it travel in one hour? — 45, 60, 40, 50
+    
+    \item Imagine that we roll a fair, six-sided die 1000 times. Out of 1000 rolls, how many times do you think the die would come up as an even number? — 500, 600, 167, 750
+    
+    \item In a sale, a shop is selling all items at half price. Before the sale, the sofa costs \$300. How much will it cost on sale? — \$150, \$100, \$200, \$250
+    
+    \item A second-hand car dealer is selling a car for \$6,000. This is two-thirds of what it cost new. How much did the car cost new? — \$9,000, \$4,000, \$12,000, \$8,000
+    
+    \item A father is 33 years older than his son. The father is also four times as old as his son. What's the father’s age? — 44, 33, 53, 62
+\end{itemize}
+
+\subsection{Experimental Conditions}
+
+\begin{itemize}
+    \item \textbf{Gigerenzer Choice.} Which one do you prefer? \$25 in cash, An Amazon gift card whose value is decided by the following lottery: Of every 100 people who play the lottery, 50 win a \$50 Amazon gift card and the other 50 win a \$100 Amazon gift card.
+    
+    \item \textbf{Ariely Choice.} Which one do you prefer? A lottery in which you have a 60\% chance of winning a \$50 Amazon gift card and a 40\% chance of winning a \$100 Amazon gift card., \$25 in cash,  A lottery in which you have a 50\% chance of winning a \$50 Amazon gift card and a 50\% chance of winning a \$100 Amazon gift card.
+
+    \item \textbf{Certain Choice.} Which one do you prefer? \$25 in cash, \$50 Amazon gift card
+    
+    \item \textbf{Uncertain Choice.} Which one do you prefer? \$25 in cash, A lottery in which you have a 50\% chance of winning a \$50 Amazon gift card and a 50\% chance of winning a \$100 Amazon gift card.
+\end{itemize}
+
+Experiment 2 (Bonus)
+
+\begin{itemize}
+    \item \textbf{Certain Choice with Bonus.} You are eligible for the bonus payment. You can pick one of the following options for your bonus ... \$0.25 in cash,  An Amazon gift card of \$0.50 in value
+
+    \item \textbf{Uncertain Choice.} You are eligible for the bonus payment. You can pick one of the following options for your bonus ... \$0.25 in cash, An Amazon gift card whose value is determined by a virtual coin toss. You win a \$0.50 Amazon gift card if the coin lands heads and a \$1 Amazon gift card if it lands tails
+
+    \item \textbf{Ask and Choose with Bonus.} What is the lowest amount of money that you would get from a lottery where you have a 50\% chance of winning \$50 and a 50\% chance of winning \$100? You are eligible for the bonus payment. You can pick one of the following options for your bonus .. \$0.25 in cash,  An Amazon gift card whose value we determine by a lottery where a person has a 50\% chance of winning a \$0.50 Amazon gift card and a 50\% chance of winning a \$1 Amazon gift card
+\end{itemize}
+
+\end{document}
+
