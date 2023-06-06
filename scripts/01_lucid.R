@@ -4,9 +4,10 @@ library(readr)
 library(tidyr)
 library(ggplot2)
 library(knitr)
+library(xtable)
 
 # Load dat
-uncert <- read_csv("data/Uncertainty+Effect+replication_January+28,+2023_20.38.zip")
+uncert <- read_csv("data/lucid/Uncertainty+Effect+replication_January+28,+2023_20.38.zip")
 
 # Filter attn_check
 uncert$attn_checkc <- uncert$attn_check == "Extremely interested,Very interested"
@@ -54,12 +55,11 @@ ggplot(num_mean_se,
         axis.ticks.y = element_blank(),
         axis.title.x = element_text(vjust = -1, margin = margin(10, 0, 0, 0)),
         axis.title.y = element_text(vjust = 1),
-        axis.ticks   = element_line(color = "#e3e3e3", size = .2),
+        axis.ticks   = element_line(color = "#e3e3e3", linewidth = .2),
         plot.margin = unit(c(0, 1, .5, 0), "cm")) + 
   coord_flip()
-ggsave("figs/numeracy.png")
-
-
+ggsave("figs/lucid_numeracy.png")
+ggsave("figs/lucid_numeracy.pdf")
 
 # Uncertainty qs. --- proportion choosing cash
 
@@ -77,9 +77,40 @@ fin_dat$followup_n <- as.numeric(fin_dat$followup)
 fin_dat$followup_n[fin_dat$followup_n == 1000] <- NA
 
 ### Analysis
-fin_dat %>%
+exp1 <- fin_dat %>%
   group_by(cond) %>%
-  summarise(mean(sure_choice))
+  summarise(mean(sure_choice), se = sd(sure_choice)/sqrt(n()))
+
+latex_exp1 <- xtable(exp1, caption = "Means and SEs from Experiment 1", label = "table:means")
+print(latex_exp1, include.rownames = FALSE, caption.placement = "top", file = "tabs/lucid_exp1.tex")
+
+confidence_intervals <- fin_dat %>%
+  group_by(cond) %>%
+  summarise(mean = mean(sure_choice),
+            lower = mean - qt(0.975, df = length(sure_choice)-1) * sd(sure_choice)/sqrt(length(sure_choice)),
+            upper = mean + qt(0.975, df = length(sure_choice)-1) * sd(sure_choice)/sqrt(length(sure_choice)))
+
+# Create the ggplot
+ggplot(confidence_intervals, aes(x = mean, y = cond, xmin = lower, xmax = upper)) +
+  geom_point(size = 2, color = "#aaccff") +
+  geom_errorbar(width = 0, colour="#0099ff", alpha = .5) +
+  labs(x = "Mean", y = "Group") +
+  geom_text(aes(label = cond), hjust = -0.1, vjust = -0.5, color = "black", size = 4) + 
+  theme_bw() + 
+  theme(panel.grid.major = element_line(color="#e1e1e1",  linetype = "dotted"),
+        panel.grid.minor = element_blank(),
+        legend.position  ="bottom",
+        legend.key      = element_blank(),
+        legend.key.width = unit(1, "cm"),
+        axis.title   = element_text(size = 10, color = "#555555"),
+        axis.text    = element_text(size = 10, color = "#555555"),
+        axis.ticks.y = element_blank(),
+        axis.title.x = element_text(vjust = -1, margin = margin(10, 0, 0, 0)),
+        axis.title.y = element_text(vjust = 1),
+        axis.ticks   = element_line(color = "#e3e3e3", linewidth = .2),
+        plot.margin = unit(c(0, 1, .5, 0), "cm"))
+ggsave("figs/lucid_exp.png")
+ggsave("figs/lucid_exp.pdf")
 
 fin_dat %>%
   group_by(cond) %>%

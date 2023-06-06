@@ -86,6 +86,7 @@ ggplot(num_mean_se,
         plot.margin = unit(c(0, 1, .5, 0), "cm")) + 
   coord_flip()
 ggsave("figs/prolific_numeracy.png")
+ggsave("figs/prolific_numeracy.pdf")
 
 # Uncertainty qs. --- proportion choosing cash
 
