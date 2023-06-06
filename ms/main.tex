@@ -9,12 +9,12 @@
 \PassOptionsToPackage{naturalnames}{hyperref}
 \usepackage[margin=1in]{geometry}
 \usepackage[linkcolor=blue,
-			colorlinks=true,
-			urlcolor=blue,
-			pdfstartview={XYZ null null 1.00},
-			pdfpagemode=UseNone,
-			citecolor={bluish},
-			pdftitle={social proof}]{hyperref}
+            colorlinks=true,
+            urlcolor=blue,
+            pdfstartview={XYZ null null 1.00},
+            pdfpagemode=UseNone,
+            citecolor={bluish},
+            pdftitle={social proof}]{hyperref}
 
 %\newcites{SI}{SI References}
 \usepackage{natbib}
@@ -106,23 +106,34 @@
 
 \thispagestyle{empty}
 \begin{abstract}
-\noindent In a seminal article in the Quarterly Journal of Economics, \cite{gneezy2006uncertainty} (GLW) report the discovery of the uncertainty effect. In a series of experiments, they find that people are averse to picking the uncertain option even when the certain choice is worse than the worst possible outcome of the uncertain option. We successfully replicate the main finding with two larger, more representative surveys. But our data also suggest three qualifiers: 1. Adding clarifying text about the worst case to the uncertain option closes the gap, 2. Numeracy strongly predicts who chooses the worse option, 3. Providing bonus flips the sign of the effect.
+\noindent In a seminal article in the \textit{Quarterly Journal of Economics}, \cite{gneezy2006uncertainty} (GLW) report the discovery of the uncertainty effect. In a series of experiments, they find that people are averse to picking the uncertain option even when the certain choice is worse than the worst possible outcome of the uncertain option. We successfully replicate the main finding with two larger, more representative surveys. But our data also suggest three qualifiers: 1. Adding clarifying text about the worst case to the uncertain option closes the gap, 2. Numeracy strongly predicts who chooses the worse option, 3. Providing bonus flips the sign of the effect.
 \end{abstract} 
 \clearpage
 \setcounter{page}{1}
 \doublespace
 
-\section*{Replication}
-\subsection*{Results}
+\section*{Experiment 1}
 
-Figure 1 presents the results. In the baseline condition, just 36.5\% of participants opt for the \$25 in cash over the \$50 Amazon gift card. Rationally, then, we should expect to see a smaller percentage taking the cash in the lottery conditions, as the lottery is worth more than \$50 in Amazon money. But we observe a different pattern. First, a full 61.5\% opt for the cash over the lottery in the ``original lottery'' condition—consistent with Gneezy, List, and Wu (2006), we find that the lottery worth \$75 in Amazon money, and guaranteed to pay out at least \$50 in Amazon money, is less popular than \$50 in Amazon money for sure. 
+Our experiment has four treatment arms. The first two replicate the treatment arms in one of the experiments in GLW. In the first condition, we asked respondents if they would prefer \$25 in cash or a \$50 Amazon gift card. We call it the \textbf{Certain Choice} condition. We compare this to a second \textbf{Uncertain Choice} condition in which respondents were asked whether they would prefer \$25 in cash or a lottery in which they had a 50\% chance of winning a \$50 Amazon gift card and a 50\% chance of winning a \$100 Amazon gift card. Since the expected value of this lottery is \$75 in Amazon money, the rational expectation is that more participants will take the Amazon money in this condition. However, \cite{gneezy2006uncertainty} suggest that people will take the cash at a higher rate in the lottery condition, apparently out of aversion to uncertainty.
+
+Our next two conditions probe alternate mechanisms. It is possible that the wording about the lottery is confusing, i.e., perhaps some participants believe the lottery is sequential, i.e., they first have a chance of winning \$50 and then a chance of winning \$100 and, thus, a chance of winning nothing at all. To preclude this reasoning, we introduced a third condition in which participants chose between \$25 in cash or the lottery in the second condition, but with a clarification attached to the lottery: ``To be clear, you are guaranteed to get at least a \$50 gift card.'' If participants are truly averse to uncertainty, we should see similar (and relatively small, compared to the baseline) proportions opting for the lottery in both the \textbf{Uncertain Choice} and \textbf{Clarifying Uncertain Choice} conditions. But if confusion about the lottery explains any of the irrational choices in the \textbf{Uncertain Choice} condition, we should see higher proportions opting for the lottery in the \textbf{Clarifying Uncertain Choice} condition.
+
+Lastly, based on the idea (spoken about by GLW) that comparison across units maybe what is an essential condition for the effect to hold, we offered a \textbf{Direct Comparison} condition that asked respondents to choose between a \$50 Amazon gift card and the regular lottery. Unlike other arms that offer a lottery, this experimental arm has a certain choice that is more commensurate to the second option in \textbf{Certain Choice} than the first. It also makes inference hard. It could be that fewer respondents choose the lottery because the trade-off is harder or it could be that more respondents choose the lottery as the comparison is clearer. Because of these inferential issues, we exclude this condition.
+
+Figure \ref{fig:exp_1_lucid} presents the results. In the \textbf{Certain Choice} condition, just 36.5\% of the participants opt for the \$25 in cash over the \$50 Amazon gift card. Rationally, then, we should expect to see a smaller percentage taking the cash in the lottery conditions, as the lottery is worth more than \$50 in Amazon money. But we observe a different pattern. First, a full 61.5\% opt for the cash over the lottery in the original \textbf{Uncertain Choice} condition. Consistent with \citet{gneezy2006uncertainty}, we find that the lottery worth \$75 in Amazon money, and guaranteed to pay out at least \$50 in Amazon money, is less popular than \$50 in Amazon money for sure.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics{figs/lucid_exp.pdf}
+    \caption{Proportion Choosing Certain Choice in Each of the Treatment Conditions}
+    \label{fig:exp_1_lucid}
+\end{figure}
+
+As noted above, this could be due to confusion over how the lottery is described. Adding the ``clarification'' causes a dramatic drop in people choosing \$25 in cash. In the \textbf{Clarifying} condition, 44.7\% take the \$25 in cash. Thus, unclear wording surrounding the lottery may explain a significant portion of the uncertainty effect.
+
+\section*{Experiment 2}
 
 
-\section*{Numeracy}
-
-\section*{Bonus}
-
-\section*{Discussion}
 
 \clearpage
 \bibliographystyle{apsr}
@@ -164,12 +175,17 @@ The order of the response options was randomized.
 \subsection{Experimental Conditions}
 
 \begin{itemize}
-    \item Which would you prefer? \$25 in cash, A \$50 Amazon gift card
-    \item Which would you prefer? \$25 in cash, A lottery in which you have a 50\% chance of winning a \$50 Amazon gift card and a 50\% chance of winning a \$100 Amazon gift card.
-    \item Which would you prefer? \$25 in cash, A lottery in which you have a 50\% chance of winning a \$50 Amazon gift card and a 50\% chance of winning a \$100 Amazon gift card. To be clear, you are guaranteed to get at least a \$50 gift card.
-    \item Which would you prefer? A \$50 Amazon gift card, A lottery in which you have a 50\% chance of winning a \$50 Amazon gift card and a 50\% chance of winning a \$100 Amazon gift card.
-    \item What is the average amount (in gift card money) you would win from the following lottery? You have a 50\% chance of winning a \$50 gift card and a 50\% chance of winning a \$100 gift card.
+    \item \textbf{Certain Choice.} Which would you prefer? \$25 in cash, A \$50 Amazon gift card
+    
+    \item \textbf{Uncertain Choice.} Which would you prefer? \$25 in cash, A lottery in which you have a 50\% chance of winning a \$50 Amazon gift card and a 50\% chance of winning a \$100 Amazon gift card.
+    
+    \item \textbf{Uncertain Worst Case Choice.} Which would you prefer? \$25 in cash, A lottery in which you have a 50\% chance of winning a \$50 Amazon gift card and a 50\% chance of winning a \$100 Amazon gift card. To be clear, you are guaranteed to get at least a \$50 gift card.
+
+    \item \textbf{Direct Comparison.} Which would you prefer? \$A \$50 Amazon gift card, A lottery in which you have a 50\% chance of winning a \$50 Amazon gift card and a 50\% chance of winning a \$100 Amazon gift card.
+    
 \end{itemize}
+
+After the \textbf{Uncertain Choice} and the \textbf{Uncertain Worst Case Choice} condition, we asked a follow-up question:  What is the average amount (in gift card money) you would win from the following lottery? You have a 50\% chance of winning a \$50 gift card and a 50\% chance of winning a \$100 gift card.
 
 \section{Survey 2 (Prolific)}
 
@@ -178,7 +194,7 @@ The order of the response options was randomized.
 \subsubsection{Incentivizing Attention}
 On the survey, we will check if people are paying attention. Those paying attention will get an additional bonus payment.
 
-\subssubection{Attention Check}
+\subsubsection{Attention Check}
 People are very busy these days and many do not have time to follow what goes on in the government. We are testing whether people read questions. To show that you've read this much, answer both ``extremely interested'' and ``very interested.'' --- Extremely interested, Very interested,  Moderately interested, Slightly interested, Not at all interested
 
 \subsection{Numeracy Battery}
@@ -221,5 +237,12 @@ Experiment 2 (Bonus)
     \item \textbf{Ask and Choose with Bonus.} What is the lowest amount of money that you would get from a lottery where you have a 50\% chance of winning \$50 and a 50\% chance of winning \$100? You are eligible for the bonus payment. You can pick one of the following options for your bonus .. \$0.25 in cash,  An Amazon gift card whose value we determine by a lottery where a person has a 50\% chance of winning a \$0.50 Amazon gift card and a 50\% chance of winning a \$1 Amazon gift card
 \end{itemize}
 
-\end{document}
+\section{Figures}
 
+\begin{figure}[h]
+    \centering
+    \includegraphics{figs/lucid_numeracy.pdf}
+    \caption{Numeracy}
+    \label{fig:lucid_numeracy}
+\end{figure}
+\end{document}

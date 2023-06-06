@@ -36,7 +36,7 @@ num_mean_se = fin_dat %>%
 
 num_mean_se$lab <- c("Overdraft", "Dice", "Disease", "Sofa Sale", "Car", "Lottery")
 
-kable(num_mean_se[, c("lab", "avg")])
+kable(num_mean_se[, c("lab", "avg", "se")])
 
 ggplot(num_mean_se, 
        aes(x=lab, y=avg)) + 
@@ -56,7 +56,7 @@ ggplot(num_mean_se,
         axis.title.x = element_text(vjust = -1, margin = margin(10, 0, 0, 0)),
         axis.title.y = element_text(vjust = 1),
         axis.ticks   = element_line(color = "#e3e3e3", linewidth = .2),
-        plot.margin = unit(c(0, 1, .5, 0), "cm")) + 
+        plot.margin = unit(c(.2, .5, 1, .2), "cm")) + 
   coord_flip()
 ggsave("figs/lucid_numeracy.png")
 ggsave("figs/lucid_numeracy.pdf")
@@ -76,26 +76,36 @@ fin_dat <- fin_dat %>%
 fin_dat$followup_n <- as.numeric(fin_dat$followup)
 fin_dat$followup_n[fin_dat$followup_n == 1000] <- NA
 
+fin_dat <- fin_dat %>% 
+  mutate(cond = recode(cond,
+                       "clarifying" = "Clarifying",
+                       "original_sure" = "Certain choice",
+                       "original_uncertain" = "Uncertain choice"))
 ### Analysis
 exp1 <- fin_dat %>%
+  filter(cond != "direct") %>%
   group_by(cond) %>%
   summarise(mean(sure_choice), se = sd(sure_choice)/sqrt(n()))
 
 latex_exp1 <- xtable(exp1, caption = "Means and SEs from Experiment 1", label = "table:means")
 print(latex_exp1, include.rownames = FALSE, caption.placement = "top", file = "tabs/lucid_exp1.tex")
 
-confidence_intervals <- fin_dat %>%
+confidence_intervals <- fin_dat  %>%
+  filter(cond != "direct") %>%
   group_by(cond) %>%
   summarise(mean = mean(sure_choice),
-            lower = mean - qt(0.975, df = length(sure_choice)-1) * sd(sure_choice)/sqrt(length(sure_choice)),
-            upper = mean + qt(0.975, df = length(sure_choice)-1) * sd(sure_choice)/sqrt(length(sure_choice)))
+            se = sd(sure_choice)/sqrt(length(sure_choice)),
+            lower = mean - qt(0.975, df = length(sure_choice)-1) * se,
+            upper = mean + qt(0.975, df = length(sure_choice)-1) * se)
 
 # Create the ggplot
 ggplot(confidence_intervals, aes(x = mean, y = cond, xmin = lower, xmax = upper)) +
   geom_point(size = 2, color = "#aaccff") +
   geom_errorbar(width = 0, colour="#0099ff", alpha = .5) +
-  labs(x = "Mean", y = "Group") +
-  geom_text(aes(label = cond), hjust = -0.1, vjust = -0.5, color = "black", size = 4) + 
+  labs(x = "Proportion Choosing $25 in Cash", y = "") +
+  #geom_text(aes(label = cond), hjust = 0.5, vjust = -0.75, color = "black", size = 3) + 
+  geom_text(aes(label = paste(gsub("^0+", "",round(mean, 2)), "\n(",gsub("^0+", "",round(se, 2)),")")),
+            hjust = -0.1, vjust = 1.5, color = "black", size = 3) +
   theme_bw() + 
   theme(panel.grid.major = element_line(color="#e1e1e1",  linetype = "dotted"),
         panel.grid.minor = element_blank(),
@@ -108,7 +118,7 @@ ggplot(confidence_intervals, aes(x = mean, y = cond, xmin = lower, xmax = upper)
         axis.title.x = element_text(vjust = -1, margin = margin(10, 0, 0, 0)),
         axis.title.y = element_text(vjust = 1),
         axis.ticks   = element_line(color = "#e3e3e3", linewidth = .2),
-        plot.margin = unit(c(0, 1, .5, 0), "cm"))
+        plot.margin = unit(c(.2, .5, 1, .2), "cm"))
 ggsave("figs/lucid_exp.png")
 ggsave("figs/lucid_exp.pdf")
 
