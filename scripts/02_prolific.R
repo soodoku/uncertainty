@@ -161,9 +161,9 @@ fin_dat <- fin_dat %>%
 
 fin_dat <- fin_dat %>% 
   mutate(bonus = recode(bonus,
-                                "pre" = "Ask",
-                                "certain" = "Certain choice",
-                                "uncertain" = "Uncertain choice"))
+                                "pre" = "Ask (Bonus)",
+                                "certain" = "Certain choice (Bonus)",
+                                "uncertain" = "Uncertain choice (Bonus)"))
 
 prolific_exp2 <- fin_dat %>%
   group_by(bonus) %>%
@@ -221,32 +221,32 @@ summary(lmer(sure_choice ~ uncertainty_exp + numeracy + (1|ResponseId), data = l
 
 ldat <- ldat %>%
   mutate(bonus_or_not = case_when(
-    uncertainty_exp == 'certain_choice' ~ 0,
-    uncertainty_exp == 'gigerenzer_choice' ~ 0,
-    uncertainty_exp == 'ariely_choice' ~ 0,
-    uncertainty_exp == 'uncertain_choice' ~ 0,
-    uncertainty_exp == 'certain' ~ 1,
-    uncertainty_exp == 'pre' ~ 1,
-    uncertainty_exp == 'uncertain' ~ 1
+    uncertainty_exp == 'Certain choice' ~ 0,
+    uncertainty_exp == 'Natural Frequency' ~ 0,
+    uncertainty_exp == 'Decoy' ~ 0,
+    uncertainty_exp == 'Uncertain choice' ~ 0,
+    uncertainty_exp == 'Certain choice (Bonus)' ~ 1,
+    uncertainty_exp == 'Ask (Bonus)' ~ 1,
+    uncertainty_exp == 'Uncertain choice (Bonus)' ~ 1
 ))
 
 ldat <- ldat %>%
   mutate(treat_five = case_when(
-    uncertainty_exp == 'certain_choice' ~ 'certain',
-    uncertainty_exp == 'gigerenzer_choice' ~ 'gigerenzer_choice',
-    uncertainty_exp == 'ariely_choice' ~ 'ariely_choice',
-    uncertainty_exp == 'uncertain_choice' ~ 'uncertain',
-    uncertainty_exp == 'certain' ~ 'certain',
-    uncertainty_exp == 'pre' ~ 'pre',
-    uncertainty_exp == 'uncertain' ~ 'uncertain'
+    uncertainty_exp == 'Certain choice' ~ 'Certain choice',
+    uncertainty_exp == 'Natural Frequency' ~ 'Natural Frequency',
+    uncertainty_exp == 'Decoy' ~ 'Decoy',
+    uncertainty_exp == 'Uncertain choice' ~ 'Uncertain choice',
+    uncertainty_exp == 'Certain choice (Bonus)' ~ 'Certain choice',
+    uncertainty_exp == 'Ask (Bonus)' ~ 'Ask',
+    uncertainty_exp == 'Uncertain choice (Bonus)' ~ 'Uncertain choice'
   )) %>%
   mutate(treat_five = fct_relevel(treat_five, "certain"))
 
-
+summary(lmer(sure_choice ~ treat_five*bonus_or_not + (1|ResponseId), data = ldat))
 summary(lmer(sure_choice ~ treat_five*bonus_or_not*numeracy + (1|ResponseId), data = ldat))
 
-# Let's do transitions 
+# Let's do transitions
 small_dat <- fin_dat %>%
-  filter(uncertainty_exp == 'uncertain_choice' | bonus == 'uncertain')
+  filter(uncertainty_exp == 'Uncertain choice' | bonus == 'Uncertain choice (Bonus)')
 table(small_dat$sure_choice, small_dat$sure_choice_bonus)
 
