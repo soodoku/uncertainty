@@ -81,6 +81,8 @@ fin_dat <- fin_dat %>%
                        "clarifying" = "Clarifying",
                        "original_sure" = "Certain choice",
                        "original_uncertain" = "Uncertain choice"))
+
+lucid_dat <- fin_dat[, c("sure_choice", "ResponseId", "cond", "numeracy")] %>% rename(uncertainty_exp = cond)
 ### Analysis
 exp1 <- fin_dat %>%
   filter(cond != "direct") %>%

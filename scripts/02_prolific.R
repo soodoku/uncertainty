@@ -242,11 +242,15 @@ ldat <- ldat %>%
   )) %>%
   mutate(treat_five = fct_relevel(treat_five, "certain"))
 
-summary(lmer(sure_choice ~ treat_five*bonus_or_not + (1|ResponseId), data = ldat))
+summary(lmer(sure_choice ~ treat_five*numeracy + (1|ResponseId), data = ldat))
 summary(lmer(sure_choice ~ treat_five*bonus_or_not*numeracy + (1|ResponseId), data = ldat))
 
 # Let's do transitions
 small_dat <- fin_dat %>%
   filter(uncertainty_exp == 'Uncertain choice' | bonus == 'Uncertain choice (Bonus)')
 table(small_dat$sure_choice, small_dat$sure_choice_bonus)
+
+# Add Lucid Data
+big_dat <- rbind(ldat[, c("sure_choice", "ResponseId", "uncertainty_exp", "numeracy")], lucid_dat)
+summary(lmer(sure_choice ~ uncertainty_exp*numeracy + (1|ResponseId), data = big_dat))
 
