@@ -251,6 +251,8 @@ small_dat <- fin_dat %>%
 table(small_dat$sure_choice, small_dat$sure_choice_bonus)
 
 # Add Lucid Data
-big_dat <- rbind(ldat[, c("sure_choice", "ResponseId", "uncertainty_exp", "numeracy")], lucid_dat)
-summary(lmer(sure_choice ~ uncertainty_exp*numeracy + (1|ResponseId), data = big_dat))
+# Funny Simpson's Effect Thing Going on
+big_dat <- rbind(ldat[, c("sure_choice", "ResponseId", "uncertainty_exp", "numeracy")], lucid_dat) %>% 
+  mutate(uncertainty_exp = relevel(as.factor(uncertainty_exp), ref = "Certain choice"))
+summary(lmer(sure_choice ~ uncertainty_exp + (1|ResponseId), data = big_dat))
 
